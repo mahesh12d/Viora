@@ -1,0 +1,5 @@
+Green - #2DBC9A
+Blue - #465862
+Grey - #F8F8F8
+Footer - #F8F8F8
+Grey footer txt color - #A8AAAB

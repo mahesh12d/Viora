@@ -1,7 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const variants = {
   hidden: { opacity: 0, y: 28 },
@@ -9,6 +9,19 @@ const variants = {
     opacity: 1,
     y: 0,
     transition: { duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  }),
+};
+
+// The travel is what causes trouble for motion-sensitive users, so that's
+// what's dropped; a short opacity fade is kept so the staggered order of a
+// grid still reads. globals.css's prefers-reduced-motion block can't cover
+// this — it only neutralises CSS animations/transitions, and these are
+// JS-driven transforms.
+const reducedVariants = {
+  hidden: { opacity: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    transition: { duration: 0.2, delay: i * 0.04 },
   }),
 };
 
@@ -34,6 +47,7 @@ export function SectionReveal({
   // sections are untouched — they still get the normal scroll-triggered
   // reveal, since whileInView works correctly once the page has settled.
   const [forceVisible, setForceVisible] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,7 +67,7 @@ export function SectionReveal({
       whileInView={forceVisible ? undefined : 'visible'}
       viewport={{ once: true, amount: 0.15 }}
       custom={delay}
-      variants={variants}
+      variants={reduceMotion ? reducedVariants : variants}
     >
       {children}
     </motion.div>

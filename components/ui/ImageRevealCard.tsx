@@ -26,8 +26,8 @@ export function ImageRevealCard({
   label,
   delay = 0,
   className = '',
-  curtainColor = '#C6A85C',
-  fallbackGradient = 'linear-gradient(160deg, #F7F4EF 0%, #FAF8F5 50%, #F0EAE0 100%)',
+  curtainColor = '#2DBC9A',
+  fallbackGradient = 'linear-gradient(160deg, #F8F8F8 0%, #FFFFFF 50%, #EFEFEF 100%)',
   sizes = '(min-width: 1024px) 40vw, 90vw',
   priority = false,
 }: ImageRevealCardProps) {
